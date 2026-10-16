@@ -1,0 +1,37 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "langchain-recruitmcp"
+version = "0.1.0"
+description = "LangChain integration for RecruitMCP: load RecruitMCP's MCP tools as LangChain tools."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "RecruitMCP" }]
+requires-python = ">=3.10"
+dependencies = [
+    "langchain-core>=0.3",
+    "langchain-mcp-adapters>=0.1",
+]
+keywords = ["langchain", "mcp", "recruiting", "agents"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+]
+
+[project.urls]
+Homepage = "https://recruitmcp.com"
+Documentation = "https://recruitmcp.com/docs/mcp"
+
+[dependency-groups]
+test = ["pytest>=8", "pytest-asyncio>=0.23"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/langchain_recruitmcp"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests/unit_tests"]
+markers = ["integration: needs RECRUITMCP_KEY and network"]
