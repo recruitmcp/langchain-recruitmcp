@@ -5,10 +5,8 @@ LangChain integration for [RecruitMCP](https://recruitmcp.com). It loads Recruit
 ## Install
 
 ```bash
-pip install "git+https://github.com/recruitmcp/langchain-recruitmcp.git"
+pip install langchain-recruitmcp
 ```
-
-A PyPI release (`pip install langchain-recruitmcp`) is coming soon.
 
 ## Set your key
 
