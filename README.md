@@ -33,10 +33,20 @@ asyncio.run(main())
 With a LangGraph agent:
 
 ```python
+import asyncio
 from langchain.agents import create_agent
+from langchain_recruitmcp import RecruitMCPToolkit
 
-agent = create_agent("openai:gpt-4.1-mini", tools=await RecruitMCPToolkit().aget_tools())
+async def main():
+    tools = await RecruitMCPToolkit().aget_tools()
+    agent = create_agent("openai:gpt-4.1-mini", tools=tools)
+    result = await agent.ainvoke({"messages": [{"role": "user", "content": "Find backend engineers in Ghent, Belgium. Dry run only."}]})
+    print(result["messages"][-1].content)
+
+asyncio.run(main())
 ```
+
+This needs `pip install langchain-openai` and `OPENAI_API_KEY`. Any LangChain chat model works.
 
 ## Options
 
