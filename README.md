@@ -30,7 +30,7 @@ async def main():
 asyncio.run(main())
 ```
 
-With a LangGraph agent (`pip install langchain langchain-openai langchain-recruitmcp`):
+With a LangGraph agent. `create_agent` lives in `langchain.agents` from langchain 1.0, and langchain is not a dependency of this package, so install it too (`pip install "langchain-recruitmcp[agents]" langchain-openai`, or `pip install "langchain>=1.0" langchain-openai langchain-recruitmcp`):
 
 ```python
 import asyncio

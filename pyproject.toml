@@ -21,6 +21,9 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
 ]
 
+[project.optional-dependencies]
+agents = ["langchain>=1.0"]
+
 [project.urls]
 Homepage = "https://recruitmcp.com"
 Documentation = "https://recruitmcp.com/docs/mcp"
