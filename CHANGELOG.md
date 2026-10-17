@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.2 (2026-10-17)
+
+- `list_billing_transactions` is now a billing tool: it is off by default and comes back, together with `get_auto_refill`, only with `include_billing=True`.
+- README and docstring no longer mention `set_auto_refill`, which the server does not expose.
+
 ## 0.1.1 (2026-10-17)
 
 - Billing tools (`set_auto_refill`, `get_auto_refill`) are off by default. Pass `include_billing=True` to get them.

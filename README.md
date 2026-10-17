@@ -55,7 +55,7 @@ This needs `OPENAI_API_KEY`. Any LangChain chat model works.
 | `api_key` | `RECRUITMCP_KEY` env var | Your RecruitMCP key |
 | `url` | `RECRUITMCP_MCP_URL` or `https://mcp.recruitmcp.com/mcp` | MCP endpoint |
 | `sourcing_only` | `True` | Drops outreach tools only. Uses the tool's `recruitmcp/category` metadata when present, otherwise its name |
-| `include_billing` | `False` | Billing tools (`set_auto_refill`, `get_auto_refill`) are dropped unless this is True. Auto-refill charges the saved card |
+| `include_billing` | `False` | Billing tools (`get_auto_refill`, `list_billing_transactions`) are dropped unless this is True |
 | `include` | `None` | Keep only these tool names |
 | `exclude` | `None` | Drop these tool names |
 

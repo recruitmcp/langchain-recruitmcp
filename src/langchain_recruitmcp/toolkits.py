@@ -30,9 +30,13 @@ OUTREACH_TOOL_MARKERS: tuple[str, ...] = (
 )
 
 
-# Billing tools. Off by default: an agent should not turn on auto-refill, which
-# charges the saved card. Pass include_billing=True to get them.
-BILLING_TOOLS: frozenset[str] = frozenset({"set_auto_refill", "get_auto_refill"})
+# Billing tools. Off by default: an agent doing recruiting work does not need the
+# account's billing history or auto-refill settings. Pass include_billing=True to
+# get them. "set_auto_refill" is not exposed by the server today; it stays here
+# only as a backstop so it would be off by default if it ever appears.
+BILLING_TOOLS: frozenset[str] = frozenset(
+    {"get_auto_refill", "list_billing_transactions", "set_auto_refill"}
+)
 
 
 CATEGORY_META_KEY = "recruitmcp/category"
@@ -75,7 +79,7 @@ class RecruitMCPToolkit:
         url: MCP endpoint. Defaults to ``RECRUITMCP_MCP_URL`` or the public endpoint.
         sourcing_only: When True (the default), outreach tools are dropped.
         include_billing: When False (the default), billing tools
-            (``set_auto_refill``, ``get_auto_refill``) are dropped.
+            (``get_auto_refill``, ``list_billing_transactions``) are dropped.
         include: Optional allowlist of tool names, applied after ``sourcing_only``.
         exclude: Optional tool names to drop.
 

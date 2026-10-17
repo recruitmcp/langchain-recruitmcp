@@ -74,7 +74,7 @@ def test_is_outreach_tool(name, expected):
 async def test_sourcing_only_default(mock_client):
     cls, _ = mock_client
     tools = await RecruitMCPToolkit(api_key="k").aget_tools()
-    assert [t.name for t in tools] == [n for n in NAMES[:8] if n != "get_auto_refill"]
+    assert [t.name for t in tools] == NAMES[:6]
     config = cls.call_args.args[0]["recruitmcp"]
     assert config["headers"]["Authorization"] == "Bearer k"
 
@@ -100,7 +100,7 @@ async def test_tools_cached(mock_client):
 
 
 def test_sync_get_tools(mock_client):
-    assert len(RecruitMCPToolkit(api_key="k").get_tools()) == 7
+    assert len(RecruitMCPToolkit(api_key="k").get_tools()) == 6
 
 
 def test_meta_category_wins_over_name():
@@ -128,14 +128,26 @@ async def test_filter_uses_meta(monkeypatch):
     assert names == ["send_digest", "search_people"]
 
 
-@pytest.mark.asyncio
+BILLING = {"get_auto_refill", "list_billing_transactions"}
+
+
 async def test_billing_tools_off_by_default(mock_client):
-    names = [t.name for t in await RecruitMCPToolkit(api_key="k").aget_tools()]
-    assert "get_auto_refill" not in names
-    assert "list_billing_transactions" in names
+    names = {t.name for t in await RecruitMCPToolkit(api_key="k").aget_tools()}
+    assert not names & BILLING
+    names = {t.name for t in await RecruitMCPToolkit(api_key="k", sourcing_only=False).aget_tools()}
+    assert not names & BILLING
 
 
-@pytest.mark.asyncio
 async def test_billing_tools_opt_in(mock_client):
-    names = [t.name for t in await RecruitMCPToolkit(api_key="k", include_billing=True).aget_tools()]
-    assert "get_auto_refill" in names
+    names = {t.name for t in await RecruitMCPToolkit(api_key="k", include_billing=True).aget_tools()}
+    assert BILLING <= names
+
+
+def test_billing_tools_constant():
+    from langchain_recruitmcp import BILLING_TOOLS
+    assert BILLING <= BILLING_TOOLS
+
+
+def test_version_matches():
+    import langchain_recruitmcp
+    assert langchain_recruitmcp.__version__ == "0.1.2"
