@@ -14,8 +14,9 @@ URL_ENV_VAR = "RECRUITMCP_MCP_URL"
 
 # Backstop only: the server sets _meta['recruitmcp/category'] on every tool, and
 # hides outreach tools from tools/list while outreach is off. These name
-# fragments are used only when a tool has no category. Name fragments that mark a tool as outreach (drafting, sequencing, sending,
-# approving, connecting accounts). Matching is case-insensitive.
+# fragments are used only when a tool has no category. They mark a tool as
+# outreach (drafting, sequencing, sending, approving, connecting accounts).
+# Matching is case-insensitive.
 OUTREACH_TOOL_MARKERS: tuple[str, ...] = (
     "outreach",
     "send",
