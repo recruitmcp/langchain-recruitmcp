@@ -29,6 +29,11 @@ OUTREACH_TOOL_MARKERS: tuple[str, ...] = (
 )
 
 
+# Billing tools. Off by default: an agent should not turn on auto-refill, which
+# charges the saved card. Pass include_billing=True to get them.
+BILLING_TOOLS: frozenset[str] = frozenset({"set_auto_refill", "get_auto_refill"})
+
+
 CATEGORY_META_KEY = "recruitmcp/category"
 
 
@@ -68,6 +73,8 @@ class RecruitMCPToolkit:
         api_key: RecruitMCP API key. Defaults to the ``RECRUITMCP_KEY`` env var.
         url: MCP endpoint. Defaults to ``RECRUITMCP_MCP_URL`` or the public endpoint.
         sourcing_only: When True (the default), outreach tools are dropped.
+        include_billing: When False (the default), billing tools
+            (``set_auto_refill``, ``get_auto_refill``) are dropped.
         include: Optional allowlist of tool names, applied after ``sourcing_only``.
         exclude: Optional tool names to drop.
 
@@ -84,6 +91,7 @@ class RecruitMCPToolkit:
         *,
         url: Optional[str] = None,
         sourcing_only: bool = True,
+        include_billing: bool = False,
         include: Optional[Iterable[str]] = None,
         exclude: Optional[Iterable[str]] = None,
     ) -> None:
@@ -96,6 +104,7 @@ class RecruitMCPToolkit:
         self._api_key = key
         self.url = url or os.environ.get(URL_ENV_VAR) or DEFAULT_MCP_URL
         self.sourcing_only = sourcing_only
+        self.include_billing = include_billing
         self.include = set(include) if include is not None else None
         self.exclude = set(exclude or ())
         self._tools: Optional[list[BaseTool]] = None
@@ -122,6 +131,8 @@ class RecruitMCPToolkit:
         kept = []
         for tool in tools:
             if self.sourcing_only and is_outreach_tool(tool):
+                continue
+            if not self.include_billing and tool.name in BILLING_TOOLS:
                 continue
             if self.include is not None and tool.name not in self.include:
                 continue

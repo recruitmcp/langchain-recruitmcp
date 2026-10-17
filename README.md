@@ -30,7 +30,7 @@ async def main():
 asyncio.run(main())
 ```
 
-With a LangGraph agent:
+With a LangGraph agent (`pip install langchain langchain-openai langchain-recruitmcp`):
 
 ```python
 import asyncio
@@ -46,7 +46,7 @@ async def main():
 asyncio.run(main())
 ```
 
-This needs `pip install langchain-openai` and `OPENAI_API_KEY`. Any LangChain chat model works.
+This needs `OPENAI_API_KEY`. Any LangChain chat model works.
 
 ## Options
 
@@ -55,6 +55,7 @@ This needs `pip install langchain-openai` and `OPENAI_API_KEY`. Any LangChain ch
 | `api_key` | `RECRUITMCP_KEY` env var | Your RecruitMCP key |
 | `url` | `RECRUITMCP_MCP_URL` or `https://mcp.recruitmcp.com/mcp` | MCP endpoint |
 | `sourcing_only` | `True` | Drops outreach tools only. Uses the tool's `recruitmcp/category` metadata when present, otherwise its name |
+| `include_billing` | `False` | Billing tools (`set_auto_refill`, `get_auto_refill`) are dropped unless this is True. Auto-refill charges the saved card |
 | `include` | `None` | Keep only these tool names |
 | `exclude` | `None` | Drop these tool names |
 

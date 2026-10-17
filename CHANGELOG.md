@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1
+
+- Billing tools (`set_auto_refill`, `get_auto_refill`) are off by default. Pass `include_billing=True` to get them.
+- README: the LangGraph example installs `langchain` and runs inside an async main.
+
 ## 0.1.0 (unreleased)
 
 - First release of `RecruitMCPToolkit`: loads RecruitMCP's MCP tools through `langchain-mcp-adapters`.
